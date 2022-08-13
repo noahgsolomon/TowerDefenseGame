@@ -16,7 +16,7 @@ public class KeyboardListener implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_A)
             gameStates = MENU;
-        if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
+        if (e.getKeyCode() == KeyEvent.VK_D)
             gameStates = PLAYING;
         if (e.getKeyCode() == KeyEvent.VK_S)
             gameStates = SETTINGS;
