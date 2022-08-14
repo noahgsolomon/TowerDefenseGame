@@ -36,6 +36,7 @@ public class Game extends JFrame implements Runnable{ //builds the window on the
 
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null); //game opens center of screen
+        setResizable(false);
 
         initClasses();
         add(gameScreen); //adds the panel to the frame
