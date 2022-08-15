@@ -1,5 +1,8 @@
 package main;
 
+import inputs.KeyboardListener;
+import inputs.MyMouseListener;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,11 +17,24 @@ public class GameScreen extends JPanel { //container we can draw to inside the w
     private ArrayList<BufferedImage> sprites = new ArrayList<>();
     private Render render;
 
+    private MyMouseListener myMouseListener;
+    private KeyboardListener keyboardListener;
+
     public GameScreen(Game game) {
         this.game = game;
 
         setPanelSize();
+    }
 
+    public void initInputs() {
+        myMouseListener = new MyMouseListener(game);
+        keyboardListener = new KeyboardListener();
+
+        addMouseListener(myMouseListener);
+        addMouseMotionListener(myMouseListener);
+        addKeyListener(keyboardListener);
+
+        requestFocus(); //makes sure no bugs come up. focus of all inputs
     }
 
     private void setPanelSize() {
