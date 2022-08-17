@@ -38,7 +38,7 @@ public class GameScreen extends JPanel { //container we can draw to inside the w
     }
 
     private void setPanelSize() {
-        size = new Dimension(640, 640);
+        size = new Dimension(640, 740);
         setMinimumSize(size);
         setPreferredSize(size);
         setMinimumSize(size);
