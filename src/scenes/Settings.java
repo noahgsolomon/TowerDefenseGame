@@ -1,7 +1,8 @@
 package scenes;
 
+import helps.LevelBuild;
 import main.Game;
-import main.GameStates;
+import managers.TileManager;
 import ui.MyButton;
 
 import javax.imageio.ImageIO;
@@ -17,14 +18,18 @@ public class Settings extends GameScene implements SceneMethods{
     private BufferedImage img;
     private InputStream is;
     private MyButton bMenu;
+    private int[][] lvl;
+    private TileManager tileManager;
     public Settings(Game game) {
         super(game);
         initButtons();
         importImg();
+        lvl = LevelBuild.getSettingsLevelData();
+        tileManager = new TileManager();
     }
 
     private void initButtons() {
-            bMenu = new MyButton("Menu", 2, 2, 100, 30);
+            bMenu = new MyButton("Menu", 10, 20, 150, 75);
     }
 
     private void importImg() {
@@ -40,15 +45,17 @@ public class Settings extends GameScene implements SceneMethods{
 
     @Override
     public void render(Graphics g) {
-        for (int x = 0; x < 6; x++) {
-            for (int y = 0; y < 6; y++) {
-                g.drawImage(img, x*121, y*121, null);
+        for (int y = 0; y < lvl.length; y++) {
+            for (int x = 0; x < lvl[y].length; x++) {
+                int id = lvl[y][x];
+                g.drawImage(tileManager.getSprite(id), x * 32, y * 32, null);
             }
         }
 
         drawButtons(g);
     }
     private void drawButtons(Graphics g) {
+        g.setFont(new Font("Verdana", Font.PLAIN, 24));
         bMenu.draw(g);
     }
 

@@ -8,6 +8,7 @@ import scenes.Settings;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -108,7 +109,6 @@ public class Game extends JFrame implements Runnable{ //builds the window on the
         }
         
     }
-
     //getters and setters
 
     public Render getRender(){

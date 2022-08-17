@@ -5,11 +5,13 @@ import main.Game;
 import managers.TileManager;
 import objects.Tile;
 import ui.ButtonBar;
+import ui.MyButton;
 
 import java.awt.*;
 
 public class Playing extends GameScene implements SceneMethods{
     private int[][] lvl;
+    private int[][] lvlReset;
     private TileManager tileManager;
     private boolean mousePressed;
     private boolean mouseDragged;
@@ -19,12 +21,14 @@ public class Playing extends GameScene implements SceneMethods{
     private int lastTilex, lastTileY, lastTileId;
     private Tile selectedTile;
     private boolean drawSelect;
+    public int i = 0;
 
 
     public Playing(Game game) {
         super(game);
 
         lvl = LevelBuild.getLevelData();
+        lvlReset = LevelBuild.getPlayingReset();
         tileManager = new TileManager();
         buttonBar = new ButtonBar(0, 640, 640, 100, this);
 
@@ -33,13 +37,23 @@ public class Playing extends GameScene implements SceneMethods{
 
     @Override
     public void render(Graphics g) {
-        for (int y = 0; y < lvl.length; y++) {
-            for (int x = 0; x < lvl[y].length; x++) {
-                int id = lvl[y][x];
-                g.drawImage(tileManager.getSprite(id), x * 32, y * 32, null);
+        if (ButtonBar.removeCount() > i){
+            i++;
+            for (int y = 0; y < lvlReset.length; y++) {
+                for (int x = 0; x < lvlReset[y].length; x++) {
+                    int id = lvlReset[y][x];
+                    g.drawImage(tileManager.getSprite(id), x * 32, y * 32, null);
+                }
             }
         }
-
+        else if (ButtonBar.removeCount() < 1) {
+            for (int y = 0; y < lvl.length; y++) {
+                for (int x = 0; x < lvl[y].length; x++) {
+                    int id = lvl[y][x];
+                    g.drawImage(tileManager.getSprite(id), x * 32, y * 32, null);
+                }
+            }
+        }
         buttonBar.draw(g);
         drawSelectedTile(g);
     }
@@ -86,8 +100,11 @@ public class Playing extends GameScene implements SceneMethods{
             lastTilex = tileX;
             lastTileY = tileY;
             lastTileId = selectedTile.getId();
+            if (ButtonBar.isRemove()) {
+                lvlReset[tileY][tileX] = selectedTile.getId();
+            }
+            else lvl[tileY][tileX] = selectedTile.getId();
 
-            lvl[tileY][tileX] = selectedTile.getId();
         }
     }
 
