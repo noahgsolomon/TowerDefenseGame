@@ -23,8 +23,7 @@ public class Menu extends GameScene implements SceneMethods {
 
     private MyButton bPlaying, bSettings, bQuit, bCycle, bOff;
     private int[][] lvl;
-    private int[][] lvl2;
-    private int[][] lvlWater;
+    private int[][] randLvl;
     private TileManager tileManager;
 
     public Menu(Game game) {
@@ -33,8 +32,7 @@ public class Menu extends GameScene implements SceneMethods {
         loadSprites();
         initButtons();
         lvl = LevelBuild.getMenuLevelData();
-        lvl2 = LevelBuild.getMenuLevelData();
-        lvlWater = LevelBuild.getMenuOff();
+        randLvl = LevelBuild.getMenuLevelData();
         tileManager = new TileManager();
     }
 
@@ -65,25 +63,14 @@ public class Menu extends GameScene implements SceneMethods {
 
     private void levelCycle(Graphics g) {
         if (bCycle.isMouseClicked()) {
-            for (int y = 0; y < lvl2.length; y++) {
-                for (int x = 0; x < lvl2[y].length; x++) {
-                    int id = lvl2[y][x];
-                    g.drawImage(tileManager.getSprite(id), x * 32, y * 32, null);
-                }
-            }
+            lvl = randLvl;
         }
-        if (!bCycle.isMouseClicked()) {
+        if (bOff.isMouseClicked()){
+            lvl = LevelBuild.getMenuOff();
+        }
             for (int y = 0; y < lvl.length; y++) {
                 for (int x = 0; x < lvl[y].length; x++) {
                     int id = lvl[y][x];
-                    g.drawImage(tileManager.getSprite(id), x * 32, y * 32, null);
-                }
-            }
-        }
-        if (bOff.isMouseClicked())
-            for (int y = 0; y < lvlWater.length; y++) {
-                for (int x = 0; x < lvlWater[y].length; x++) {
-                    int id = lvlWater[y][x];
                     g.drawImage(tileManager.getSprite(id), x * 32, y * 32, null);
                 }
             }
@@ -132,6 +119,7 @@ public class Menu extends GameScene implements SceneMethods {
             System.exit(0);
         }
         if (bCycle.getBounds().contains(x, y)) {
+            randLvl = LevelBuild.getMenuLevelData();
             bCycle.setMouseClicked(true);
         }
         if (bOff.getBounds().contains(x, y)) {
@@ -201,5 +189,8 @@ public class Menu extends GameScene implements SceneMethods {
         bQuit.resetBooleans();
         bCycle.resetBooleans();
         bOff.resetBooleans();
+
+        bCycle.setMouseClicked(false);
+        bOff.setMouseClicked(false);
     }
 }

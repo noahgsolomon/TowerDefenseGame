@@ -11,6 +11,7 @@ import java.awt.*;
 
 public class Playing extends GameScene implements SceneMethods{
     private int[][] lvl;
+    private int[][] randLvl;
     private TileManager tileManager;
     private boolean mousePressed;
     private boolean mouseDragged;
@@ -27,6 +28,7 @@ public class Playing extends GameScene implements SceneMethods{
         super(game);
 
         lvl = LevelBuild.getLevelData();
+        randLvl = LevelBuild.generateMap();
         tileManager = new TileManager();
         buttonBar = new ButtonBar(0, 640, 640, 100, this);
 
@@ -39,7 +41,7 @@ public class Playing extends GameScene implements SceneMethods{
             lvl = LevelBuild.getPlayingReset();
         }
         if (ButtonBar.isGenerate()){
-            lvl = LevelBuild.generateMap();
+            lvl = randLvl;
         }
             for (int y = 0; y < lvl.length; y++) {
                 for (int x = 0; x < lvl[y].length; x++) {
@@ -76,6 +78,8 @@ public class Playing extends GameScene implements SceneMethods{
 
         if (y >= 640){
             buttonBar.mouseClicked(x,y);
+            if (ButtonBar.bGenerate.isMouseClicked())
+                randLvl = LevelBuild.generateMap();
         }
         else {
                 changeTile(mouseX, mouseY);
