@@ -16,6 +16,7 @@ public class ButtonBar {
     private Playing playing;
     private MyButton bMenu;
     public static MyButton bRemove;
+    public static MyButton bGenerate;
     private static int i=0;
     private boolean b;
 
@@ -34,6 +35,7 @@ public class ButtonBar {
     private void initButtons() {
         bMenu = new MyButton("Menu", 5, 650, 96, 48);
         bRemove = new MyButton("Remove", 5, 705, 96, 24);
+        bGenerate = new MyButton("Generate", 110, 705, 96, 24);
 
         int w = 50;
         int h = 50;
@@ -54,6 +56,7 @@ public class ButtonBar {
         bMenu.draw(g);
         g.setFont(new Font("Verdana", Font.PLAIN, 10));
         bRemove.draw(g);
+        bGenerate.draw(g);
 
         drawTileButtons(g);
         drawSelectedTile(g);
@@ -64,11 +67,8 @@ public class ButtonBar {
         return bRemove.isMouseClicked();
     }
 
-    public static int removeCount(){
-        if (isRemove()){
-            return i++;
-        }
-        return i;
+    public static boolean isGenerate() {
+        return bGenerate.isMouseClicked();
     }
 
     private void drawSelectedTile(Graphics g) {
@@ -123,6 +123,9 @@ public class ButtonBar {
         if (bRemove.getBounds().contains(x, y)){
             bRemove.setMouseClicked(true);
         }
+        if (bGenerate.getBounds().contains(x, y)){
+            bGenerate.setMouseClicked(true);
+        }
         else {
             for (MyButton b : tileButtons){
                 if (b.getBounds().contains(x, y)){
@@ -136,11 +139,15 @@ public class ButtonBar {
 
     public void mousePressed(int x, int y) {
         bRemove.setMousePressed(false);
+        bGenerate.setMousePressed(false);
         if (bMenu.getBounds().contains(x, y)){
             bMenu.setMousePressed(true);
         }
         if (bRemove.getBounds().contains(x, y)){
             bRemove.setMousePressed(true);
+        }
+        if (bGenerate.getBounds().contains(x, y)){
+            bGenerate.setMousePressed(true);
         }
         else {
             for (MyButton b : tileButtons) {
@@ -156,6 +163,8 @@ public class ButtonBar {
 
     public void mouseMoved(int x, int y) {
         bMenu.setMouseOver(false);
+        bRemove.setMouseOver(false);
+        bGenerate.setMouseOver(false);
 
         for (MyButton b : tileButtons)
             b.setMouseOver(false);
@@ -164,6 +173,9 @@ public class ButtonBar {
         }
         if (bRemove.getBounds().contains(x, y)){
             bRemove.setMouseOver(true);
+        }
+        if (bGenerate.getBounds().contains(x, y)){
+            bGenerate.setMouseOver(true);
         }
         else {
             for (MyButton b : tileButtons) {
@@ -178,6 +190,9 @@ public class ButtonBar {
     public void mouseReleased(int x, int y) {
         bMenu.resetBooleans();
         bRemove.resetBooleans();
+        bRemove.setMouseClicked(false);
+        bGenerate.resetBooleans();
+        bGenerate.setMouseClicked(false);
         for (MyButton b : tileButtons) {
             b.resetBooleans();
         }

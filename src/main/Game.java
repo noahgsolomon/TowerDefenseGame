@@ -1,17 +1,11 @@
 package main;
 
-import inputs.KeyboardListener;
-import inputs.MyMouseListener;
 import scenes.Menu;
 import scenes.Playing;
 import scenes.Settings;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
+import java.util.Random;
 
 public class Game extends JFrame implements Runnable{ //builds the window on the screen
 
