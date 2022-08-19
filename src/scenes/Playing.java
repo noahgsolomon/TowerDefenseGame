@@ -1,6 +1,7 @@
 package scenes;
 
 import helps.LevelBuild;
+import helps.LoadSave;
 import main.Game;
 import managers.TileManager;
 import objects.Tile;
@@ -27,10 +28,32 @@ public class Playing extends GameScene implements SceneMethods{
     public Playing(Game game) {
         super(game);
 
-        lvl = LevelBuild.getLevelData();
+        createDefaultLevel();
         randLvl = LevelBuild.generateMap();
         tileManager = new TileManager();
         buttonBar = new ButtonBar(0, 640, 640, 100, this);
+
+
+        loadDefaultLevel();
+        saveLevel();
+    }
+
+    public void saveLevel() {
+        LoadSave.SaveLevel("new_level", lvl);
+    }
+    private void loadDefaultLevel() {
+        lvl = LoadSave.GetLevelData("new_level");
+    }
+
+    private void createDefaultLevel() {
+
+        int[] arr = new int[400];
+
+        for (int i = 0; i < arr.length; i++) {
+            arr[i] = 0;
+        }
+
+        LoadSave.CreateLevel("new_level", arr);
 
     }
 
@@ -161,4 +184,5 @@ public class Playing extends GameScene implements SceneMethods{
         this.mouseDragged = false;
         this.mousePressed = false;
     }
+
 }
